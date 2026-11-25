@@ -7,7 +7,6 @@ import {
   Check,
   CheckCircle2,
   Copy,
-  Info,
   Mail,
   MapPin,
   Phone,
@@ -75,6 +74,11 @@ export function ContactPage() {
 
   const onSubmit = async (values: ContactFormValues) => {
     if (!CONTACT_ENDPOINT) {
+      if (import.meta.env.DEV) {
+        console.info(
+          '[ContactForm] VITE_CONTACT_ENDPOINT is not configured; preparing mailto: draft fallback.',
+        )
+      }
       setSubmitState({ status: 'unconfigured', draft: values })
       return
     }
@@ -220,18 +224,6 @@ export function ContactPage() {
               </p>
             </div>
           </div>
-
-          {!CONTACT_ENDPOINT && (
-            <div className="border border-[var(--border)] bg-[var(--surface)] p-5 space-y-2">
-              <div className="flex items-center gap-2 font-mono text-xs text-[var(--text)]">
-                <Info className="h-4 w-4 shrink-0 text-[var(--accent)]" />
-                <span>Email Draft Mode</span>
-              </div>
-              <p className="text-xs leading-relaxed text-[var(--text-muted)]">
-                Direct server submission requires configuring <code className="text-[var(--text)]">VITE_CONTACT_ENDPOINT</code> (e.g. Formspree, Web3Forms, or a custom API). Until connected, submitting validates your message and opens a pre-filled draft in your email client.
-              </p>
-            </div>
-          )}
         </aside>
 
         {/* Contact Form */}
@@ -335,14 +327,15 @@ export function ContactPage() {
             {submitState.status === 'unconfigured' && (
               <div
                 role="status"
-                className="border border-[var(--accent)]/50 bg-[var(--bg)] p-5 space-y-3"
+                className="border border-[var(--border-strong)] bg-[var(--bg)] p-5 space-y-3"
               >
                 <div className="flex items-start gap-2.5 text-sm text-[var(--text)]">
-                  <Info className="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent)]" />
+                  <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent)]" />
                   <div className="space-y-1">
-                    <p className="font-medium">Form validation passed — endpoint not yet connected</p>
+                    <p className="font-medium">Ready to send via your email app</p>
                     <p className="text-xs leading-relaxed text-[var(--text-muted)]">
-                      To enable direct submission from this form, set <code className="text-[var(--text)]">VITE_CONTACT_ENDPOINT</code> to a form service (such as Formspree, Web3Forms, or an Express mail endpoint). In the meantime, open your validated message directly in your email client:
+                      Click below to open your pre-filled message in your default email client, or email{' '}
+                      <span className="text-[var(--text)]">{PROFILE.email}</span> directly.
                     </p>
                   </div>
                 </div>
@@ -350,7 +343,7 @@ export function ContactPage() {
                   <Button asChild size="sm">
                     <a href={buildMailtoHref(submitState.draft)}>
                       <Mail className="h-3.5 w-3.5" />
-                      <span>Open Draft in Email Client</span>
+                      <span>Open in Email App</span>
                     </a>
                   </Button>
                 </div>
@@ -360,13 +353,7 @@ export function ContactPage() {
             <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
               <Button type="submit" disabled={isSubmitting}>
                 <Send className="h-4 w-4" />
-                <span>
-                  {isSubmitting
-                    ? 'Sending...'
-                    : CONTACT_ENDPOINT
-                      ? 'Send Message'
-                      : 'Validate & Prepare Email'}
-                </span>
+                <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
               </Button>
               <span className="font-mono text-xs text-[var(--text-subtle)]">
                 Direct reply via {PROFILE.email}

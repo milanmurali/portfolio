@@ -178,13 +178,13 @@ export function HomePage() {
                 <div className="flex items-start justify-between gap-4 px-4 py-3.5">
                   <dt className="font-mono text-xs text-[var(--text-subtle)]">Latest Role</dt>
                   <dd className="text-right font-medium text-[var(--text)]">
-                    Invigo Software (Vizru)
+                    Associate Software Engineer Intern
                   </dd>
                 </div>
                 <div className="flex items-start justify-between gap-4 px-4 py-3.5">
-                  <dt className="font-mono text-xs text-[var(--text-subtle)]">Term</dt>
+                  <dt className="font-mono text-xs text-[var(--text-subtle)]">Company</dt>
                   <dd className="text-right text-[var(--text-muted)]">
-                    Jun 2026 – Sep 2026
+                    Invigo Software (Vizru) · Jun–Sep 2026
                   </dd>
                 </div>
                 <div className="flex items-start justify-between gap-4 px-4 py-3.5">
