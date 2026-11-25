@@ -1,1 +1,109 @@
 @import "tailwindcss";
+
+:root {
+  --bg: #0c0d0f;
+  --surface: #131518;
+  --surface-elevated: #191c21;
+  --border: #252830;
+  --border-strong: #363b47;
+  --text: #f3f1ec;
+  --text-muted: #a29f97;
+  --text-subtle: #6e6c66;
+  --accent: #e86f4d;
+  --accent-hover: #f08262;
+  --accent-ink: #0c0d0f;
+  --danger: #e55c5c;
+  --success: #4ea878;
+
+  --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  html {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    scroll-behavior: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    background-color: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  code,
+  pre,
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+}
+
+.hairline-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+.link-underline {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.link-underline:hover::after,
+.link-underline:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

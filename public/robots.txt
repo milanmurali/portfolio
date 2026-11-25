@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://milanmurali.dev/sitemap.xml
